@@ -36,6 +36,10 @@ class TaskController extends Controller
         return response()->json($task);
     }
     public function update(Request $request, $id) {
+        $this->validate($request, [
+            'name' => 'required',
+            'content' => 'required'
+        ]);
         $task = Task::find($id);
         $task->name = $request->get('name');
         $task->content = $request->get('content');
