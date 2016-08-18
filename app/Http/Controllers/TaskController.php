@@ -24,7 +24,7 @@ class TaskController extends Controller
         $task->name = $request->get('name');
         $task->content = $request->get('content');
         $task->save();
-        return response()->json($task);
+        return $task;
     }
     public function destroy($id) {
         $task = Task::find($id);
@@ -33,7 +33,7 @@ class TaskController extends Controller
     }
     public function show($id) {
         $task = Task::find($id);
-        return response()->json($task);
+        return $task;
     }
     public function update(Request $request, $id) {
         $this->validate($request, [
@@ -44,6 +44,6 @@ class TaskController extends Controller
         $task->name = $request->get('name');
         $task->content = $request->get('content');
         $task->save();
-        return response()->json($task);
+        return $task;
     }
 }
