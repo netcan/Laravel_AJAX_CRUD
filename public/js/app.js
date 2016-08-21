@@ -1,10 +1,27 @@
 $(document).ready(function () {
+    function escapeHtml(string) {
+        var entityMap = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': '&quot;',
+            "'": '&#39;',
+            "/": '&#x2F;'
+        };
+        return String(string).replace(/[&<>"'\/]/g, function (s) {
+            return entityMap[s];
+        });
+    }
+
     url = '/task/';
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('#task input[name="_token"]').val()
         }
     });
+
+
+
 
     $('#add').click(function () {
         $('#task-title').text('添加任务');
@@ -74,8 +91,8 @@ $(document).ready(function () {
                 $('#task').trigger('reset');
                 var task = '<tr id="task' + data.id + '">' +
                     '<td>'+ data.id +'</td>' +
-                    '<td>'+ data.name +'</td>' +
-                    '<td>'+ data.content +'</td>' +
+                    '<td>'+ escapeHtml(data.name) +'</td>' +
+                    '<td>'+ escapeHtml(data.content) +'</td>' +
                     '<td>'+ data.created_at +'</td>' +
                     '<td><button class="btn btn-info edit" value="'+ data.id +'">编辑</button> <button class="btn btn-warning delete" value="'+ data.id +'">删除</button>'+ '</td>' +
                     '<tr>';
