@@ -83,6 +83,7 @@ $(document).ready(function () {
         };
 
         console.log('save url:'+turl);
+        console.log(data);
 
         $.ajax({
             type: type,
