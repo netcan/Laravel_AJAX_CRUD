@@ -13,7 +13,7 @@ $(document).ready(function () {
         });
     }
 
-    url = '/task/';
+    url = '/task';
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('#task input[name="_token"]').val()
@@ -31,9 +31,10 @@ $(document).ready(function () {
 
     $('body').on('click', 'button.delete', function() {
         var tid = $(this).val();
+        console.log('delete url:'+url+tid);
         $.ajax({
             type: 'DELETE',
-            url: url+tid,
+            url: url+'/'+tid,
             success: function (data) {
                 console.log(data);
                 $('#task'+tid).remove();
@@ -56,7 +57,8 @@ $(document).ready(function () {
         $('#tsave').val('update');
         var tid = $(this).val();
         $('#tid').val(tid);
-        $.get(url+tid, function (data) {
+        console.log('edit url:'+url+tid);
+        $.get(url+'/'+tid, function (data) {
             console.log(url+tid);
             console.log(data);
             $('#tname').val(data.name);
@@ -72,13 +74,15 @@ $(document).ready(function () {
             var type = "POST"; // add
         }
         else {
-            turl = url + $('#tid').val();
+            turl = url + '/' + $('#tid').val();
             var type = "PUT"; // edit
         }
         var data = {
             name: $('#tname').val(),
             content: $('#tcontent').val()
         };
+
+        console.log('save url:'+turl);
 
         $.ajax({
             type: type,
@@ -108,6 +112,8 @@ $(document).ready(function () {
             },
             error: function (data, json, errorThrown) {
                 console.log(data);
+                $('#debug').html(data.responseText);
+
                 var errors = data.responseJSON;
                 var errorsHtml= '';
                 $.each( errors, function( key, value ) {

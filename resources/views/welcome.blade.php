@@ -47,6 +47,7 @@
                     @endforeach
                     </tbody>
                 </table>
+                <div id="debug"></div>
             </div>
             {{--Modal--}}
             <div class="modal fade" id="taskModal" tabindex="-1" role="dialog">
